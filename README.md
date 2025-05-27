@@ -11,8 +11,8 @@ Terraform scripts to provision Datadog's [Storedog](https://github.com/DataDog/s
 
 The scripts have been tested with:
 
-- Terraform v1.12.1
-- AWS CLI 2.27.19
+- [Terraform](https://developer.hashicorp.com/terraform/install) v1.12.1
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) 2.27.19
 
 ### Environment Variables
 
