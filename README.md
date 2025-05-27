@@ -31,6 +31,8 @@ Setting the following environment variables make running terraform plan/apply/de
 - `TF_VAR_dd_storedog_rum_client_token`
     - From your [RUM setup](https://docs.datadoghq.com/real_user_monitoring/browser/setup/client/?tab=rum#setup).
 
+> Optional: the `dd_site` variable is default to `datadoghq.com`, but you can change it if using a [different site](https://docs.datadoghq.com/getting_started/site/#access-the-datadog-site) by setting the `TF_VAR_dd_site` environment variable.
+
 ### Debug
 
 After running `terraform apply`, the outputs should give you the public IP/DNS of the EC2 instance. You should be able to connect to your instance with `ssh -i ~/.ssh/YOUR_KEY_PAIR ubuntu@YOUR_EC2_IP_OR_DNS`.
