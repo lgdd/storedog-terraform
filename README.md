@@ -19,14 +19,17 @@ The scripts have been tested with:
 Setting the following environment variables make running terraform plan/apply/destroy commands smoother (otherwise the command ask you to manually enter the value of each parameter):
 
 - `TF_VAR_my_public_ip_cidr`
-    - The value should come from the result of `curl -s checkip.amazonaws.com | xargs -I {} echo "{}/32"`
+    - The value should come from the result of `curl -s checkip.amazonaws.com | xargs -I {} echo "{}/32"`.
 - `TF_VAR_ec2_key_name`
+    - From a [key pair you created for EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html).
 - `TF_VAR_dd_api_key`
+    - [Datadog API Key](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token) of your organization.
 - `TF_VAR_dd_app_key`
+    - [Datadog App Key](https://docs.datadoghq.com/account_management/api-app-keys/#add-application-keys) of your organization.
 - `TF_VAR_dd_storedog_rum_app_id`
-    - From your [RUM setup](https://docs.datadoghq.com/real_user_monitoring/browser/setup/client/?tab=rum#setup)
+    - From your [RUM setup](https://docs.datadoghq.com/real_user_monitoring/browser/setup/client/?tab=rum#setup).
 - `TF_VAR_dd_storedog_rum_client_token`
-    - From your [RUM setup](https://docs.datadoghq.com/real_user_monitoring/browser/setup/client/?tab=rum#setup)
+    - From your [RUM setup](https://docs.datadoghq.com/real_user_monitoring/browser/setup/client/?tab=rum#setup).
 
 ### Debug
 
