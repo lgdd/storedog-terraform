@@ -13,6 +13,11 @@ variable "storage_in_gb" {
   default = "20"
 }
 
+resource "random_string" "storedog_id" {
+  length  = 8
+  special = false
+}
+
 variable "ec2_instance_name" {
   type    = string
   default = "storedog"
@@ -39,7 +44,7 @@ variable "subnet_cidr_block" {
 
 // Populate by environment variable TF_VAR_my_public_ip_cidr
 variable "my_public_ip_cidr" {
-  type        = string
+  type = string
 }
 
 // Can be populated by environment variable TF_VAR_dd_api_key

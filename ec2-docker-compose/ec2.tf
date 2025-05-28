@@ -10,6 +10,7 @@ resource "aws_instance" "storedog_ec2" {
     dd_api_key                   = var.dd_api_key
     dd_app_key                   = var.dd_app_key
     dd_site                      = var.dd_site
+    dd_hostname                  = "${var.ec2_instance_name}-${random_string.storedog_id.result}"
     dd_storedog_rum_app_id       = var.dd_storedog_rum_app_id
     dd_storedog_rum_client_token = var.dd_storedog_rum_client_token
   })
@@ -19,6 +20,6 @@ resource "aws_instance" "storedog_ec2" {
   }
 
   tags = {
-    Name = var.ec2_instance_name
+    Name = "${var.ec2_instance_name}-${random_string.storedog_id.result}"
   }
 }

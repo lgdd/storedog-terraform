@@ -1,9 +1,8 @@
 resource "aws_security_group" "storedog_sg" {
-  name_prefix = "${var.ec2_instance_name}-sg-"
   vpc_id      = aws_vpc.storedog_vpc.id
 
   tags = {
-    Name = "${var.ec2_instance_name}-sg"
+    Name = "${var.ec2_instance_name}-${random_string.storedog_id.result}--sg"
   }
 }
 

@@ -28,10 +28,12 @@ cp .env.template .env
 sed -i 's/^DD_API_KEY=.*/DD_API_KEY=${dd_api_key}/' .env
 sed -i 's/^DD_APP_KEY=.*/DD_APP_KEY=${dd_app_key}/' .env
 sed -i 's/^DD_SITE=.*/DD_API_KEY=${dd_site}/' .env
-sed -i 's/^DD_ENV=.*/DD_ENV=storedog-local/' .env
+sed -i 's/^DD_ENV=.*/DD_ENV=storedog/' .env
+sed -i 's/^DD_HOSTNAME=storedog-local-host/DD_HOSTNAME=${dd_hostname}/' .env
 sed -i 's/^DATADOG_API_KEY=.*/DATADOG_API_KEY=${dd_api_key}/' .env
 sed -i 's/^NEXT_PUBLIC_DD_APPLICATION_ID=.*/NEXT_PUBLIC_DD_APPLICATION_ID=${dd_storedog_rum_app_id}/' .env
 sed -i 's/^NEXT_PUBLIC_DD_CLIENT_TOKEN=.*/NEXT_PUBLIC_DD_CLIENT_TOKEN=${dd_storedog_rum_client_token}/' .env
-sed -i 's/NEXT_PUBLIC_DD_SERVICE_FRONTEND=store-frontend/NEXT_PUBLIC_DD_SERVICE_FRONTEND=storedog-frontend/' .env
+sed -i 's/^NEXT_PUBLIC_DD_SERVICE_FRONTEND=store-frontend/NEXT_PUBLIC_DD_SERVICE_FRONTEND=storedog-frontend/' .env
+sed -i 's/^NEXT_PUBLIC_DD_ENV=storedog-local/NEXT_PUBLIC_DD_ENV=storedog/' .env
 
 sudo docker compose up -d

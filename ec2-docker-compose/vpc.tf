@@ -4,7 +4,7 @@ resource "aws_vpc" "storedog_vpc" {
   enable_dns_hostnames = true
 
   tags = {
-    Name = "${var.ec2_instance_name}-vpc"
+    Name = "${var.ec2_instance_name}--vpc"
   }
 }
 
@@ -15,7 +15,7 @@ resource "aws_subnet" "storedog_vpc_public_subnet" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.ec2_instance_name}-public-subnet"
+    Name = "${var.ec2_instance_name}-${random_string.storedog_id.result}--public-subnet"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_internet_gateway" "storedog_igw" {
   vpc_id = aws_vpc.storedog_vpc.id
 
   tags = {
-    Name = "${var.ec2_instance_name}-igw"
+    Name = "${var.ec2_instance_name}-${random_string.storedog_id.result}--igw"
   }
 }
 
@@ -36,7 +36,7 @@ resource "aws_route_table" "storedog_public_route_tablw" {
   }
 
   tags = {
-    Name = "${var.ec2_instance_name}-public-rt"
+    Name = "${var.ec2_instance_name}-${random_string.storedog_id.result}--public-rt"
   }
 }
 
