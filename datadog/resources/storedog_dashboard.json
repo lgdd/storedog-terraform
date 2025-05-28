@@ -1,0 +1,265 @@
+{
+  "title": "Storedog Dashboard",
+  "description": null,
+  "widgets": [
+    {
+      "id": 1959905613824894,
+      "definition": {
+        "title": "Storedog",
+        "background_color": "vivid_purple",
+        "show_title": true,
+        "type": "group",
+        "layout_type": "ordered",
+        "widgets": [
+          {
+            "id": 541050090742104,
+            "definition": {
+              "type": "image",
+              "url": "https://imgix.datadoghq.com/img/about/presskit/logo-h/dd_horizontal_purple.png",
+              "sizing": "cover",
+              "has_background": true,
+              "has_border": true,
+              "vertical_align": "center",
+              "horizontal_align": "center"
+            },
+            "layout": { "x": 0, "y": 0, "width": 4, "height": 2 }
+          },
+          {
+            "id": 884452020317749,
+            "definition": {
+              "title": "Running containers in the past minute",
+              "title_size": "16",
+              "title_align": "center",
+              "time": { "live_span": "1m" },
+              "type": "query_value",
+              "requests": [
+                {
+                  "formulas": [{ "formula": "count_not_null(query1)" }],
+                  "response_format": "scalar",
+                  "queries": [
+                    {
+                      "query": "sum:container.uptime{*} by {host,container_id}",
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "aggregator": "avg"
+                    }
+                  ]
+                }
+              ],
+              "autoscale": true,
+              "precision": 0,
+              "timeseries_background": {
+                "type": "area",
+                "yaxis": { "include_zero": false }
+              }
+            },
+            "layout": { "x": 4, "y": 0, "width": 4, "height": 2 }
+          },
+          {
+            "id": 3696081885185522,
+            "definition": {
+              "title": "Running containers by image",
+              "title_size": "16",
+              "title_align": "left",
+              "show_legend": false,
+              "legend_size": "0",
+              "time": { "live_span": "1h" },
+              "type": "timeseries",
+              "requests": [
+                {
+                  "response_format": "timeseries",
+                  "queries": [
+                    {
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "query": "sum:docker.containers.running{*} by {docker_image}.fill(0)"
+                    }
+                  ],
+                  "display_type": "bars"
+                }
+              ],
+              "custom_links": []
+            },
+            "layout": { "x": 8, "y": 0, "width": 4, "height": 2 }
+          },
+          {
+            "id": 1931617814869135,
+            "definition": {
+              "title": "CPU by container",
+              "title_size": "16",
+              "title_align": "left",
+              "show_legend": false,
+              "type": "heatmap",
+              "custom_links": [],
+              "requests": [
+                {
+                  "style": { "palette": "dog_classic" },
+                  "response_format": "timeseries",
+                  "queries": [
+                    {
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "query": "avg:container.cpu.user{*} by {container_name,image_tag}"
+                    }
+                  ]
+                }
+              ]
+            },
+            "layout": { "x": 0, "y": 2, "width": 4, "height": 2 }
+          },
+          {
+            "id": 8510197107346229,
+            "definition": {
+              "title": "Memory by container",
+              "title_size": "16",
+              "title_align": "left",
+              "show_legend": false,
+              "type": "heatmap",
+              "custom_links": [],
+              "requests": [
+                {
+                  "style": { "palette": "dog_classic" },
+                  "response_format": "timeseries",
+                  "queries": [
+                    {
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "query": "avg:container.memory.rss{*} by {container_name}"
+                    }
+                  ]
+                }
+              ]
+            },
+            "layout": { "x": 4, "y": 2, "width": 4, "height": 2 }
+          },
+          {
+            "id": 8458397155837447,
+            "definition": {
+              "title": "tx by container",
+              "title_size": "16",
+              "title_align": "left",
+              "show_legend": false,
+              "type": "heatmap",
+              "custom_links": [],
+              "requests": [
+                {
+                  "style": { "palette": "dog_classic" },
+                  "response_format": "timeseries",
+                  "queries": [
+                    {
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "query": "avg:container.net.sent{*} by {container_name}"
+                    }
+                  ]
+                }
+              ]
+            },
+            "layout": { "x": 8, "y": 2, "width": 4, "height": 2 }
+          },
+          {
+            "id": 6813911659849620,
+            "definition": {
+              "title": "Most CPU-intensive containers",
+              "title_size": "16",
+              "title_align": "left",
+              "type": "toplist",
+              "requests": [
+                {
+                  "style": { "palette": "cool" },
+                  "response_format": "scalar",
+                  "queries": [
+                    {
+                      "query": "avg:container.cpu.user{*} by {image_name,image_tag}",
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "aggregator": "max"
+                    }
+                  ],
+                  "formulas": [{ "formula": "query1" }],
+                  "sort": {
+                    "count": 500,
+                    "order_by": [
+                      { "type": "formula", "index": 0, "order": "desc" }
+                    ]
+                  }
+                }
+              ],
+              "custom_links": []
+            },
+            "layout": { "x": 0, "y": 4, "width": 4, "height": 2 }
+          },
+          {
+            "id": 849087293009882,
+            "definition": {
+              "title": "Most RAM-intensive containers",
+              "title_size": "16",
+              "title_align": "left",
+              "type": "toplist",
+              "requests": [
+                {
+                  "style": { "palette": "dog_classic" },
+                  "response_format": "scalar",
+                  "queries": [
+                    {
+                      "query": "avg:container.memory.rss{*} by {container_name}",
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "aggregator": "max"
+                    }
+                  ],
+                  "formulas": [{ "formula": "query1" }],
+                  "sort": {
+                    "count": 500,
+                    "order_by": [
+                      { "type": "formula", "index": 0, "order": "desc" }
+                    ]
+                  }
+                }
+              ],
+              "custom_links": []
+            },
+            "layout": { "x": 4, "y": 4, "width": 4, "height": 2 }
+          },
+          {
+            "id": 1865993557128754,
+            "definition": {
+              "title": "Most tx-intensive containers",
+              "title_size": "16",
+              "title_align": "left",
+              "type": "toplist",
+              "requests": [
+                {
+                  "style": { "palette": "purple" },
+                  "response_format": "scalar",
+                  "queries": [
+                    {
+                      "query": "avg:container.net.sent{*} by {container_name}",
+                      "data_source": "metrics",
+                      "name": "query1",
+                      "aggregator": "max"
+                    }
+                  ],
+                  "formulas": [{ "formula": "query1" }],
+                  "sort": {
+                    "count": 500,
+                    "order_by": [
+                      { "type": "formula", "index": 0, "order": "desc" }
+                    ]
+                  }
+                }
+              ],
+              "custom_links": []
+            },
+            "layout": { "x": 8, "y": 4, "width": 4, "height": 2 }
+          }
+        ]
+      },
+      "layout": { "x": 0, "y": 0, "width": 12, "height": 7 }
+    }
+  ],
+  "template_variables": [],
+  "layout_type": "ordered",
+  "notify_list": [],
+  "reflow_type": "fixed"
+}
