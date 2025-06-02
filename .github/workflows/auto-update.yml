@@ -23,7 +23,7 @@ jobs:
         run: uv run main.py
       - name: Move Docker Compose file
         run: |
-          mv .github/workflows/scripts/auto-update/docker-compose.images.yml .
+          mv .github/workflows/scripts/auto-update/docker-compose.images.yml ec2-docker-compose/
       - name: Commit & Push
         run: |
           git config --global user.name 'github-actions[bot]'
