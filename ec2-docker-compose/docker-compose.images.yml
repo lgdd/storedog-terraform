@@ -112,6 +112,7 @@ services:
       com.datadoghq.tags.version: ${DD_VERSION_BACKEND-1.0.0}
     volumes:
     - .env:/app/.env
+    - ./services/worker/config/initializers/datadog-tracer.rb:/app/config/initializers/datadog-tracer.rb
   discounts:
     image: ghcr.io/datadog/storedog/discounts:latest
     command: wait-for-it postgres:5432 -- ddtrace-run flask run --port=2814 --host=0.0.0.0
