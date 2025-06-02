@@ -10,8 +10,8 @@ def update_volumes_attribute(compose, services):
     for service in services:
         if compose["services"][service].get("volumes") is not None:
             del compose["services"][service]["volumes"]
-    for service in ["backend", "worker"]:
-        compose["services"][service]["volumes"] = [".env:/app/.env"]
+    compose["services"]["backend"]["volumes"] = [".env:/app/.env"]
+    compose["services"]["worker"]["volumes"] = [".env:/app/.env", "./services/worker/config/initializers/datadog-tracer.rb:/app/config/initializers/datadog-tracer.rb"]
 
 def update_networks(compose):
     for network in compose["networks"]:
