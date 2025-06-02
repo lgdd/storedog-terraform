@@ -28,6 +28,11 @@ def add_image_attribute(compose, services):
                 {"image": f"ghcr.io/datadog/storedog/{service}-java:latest"},
                 **compose["services"][service]
             )
+        elif service == "worker":
+            compose["services"][service] = dict(
+                {"image": f"ghcr.io/datadog/storedog/backend:latest"},
+                **compose["services"][service]
+            )
         else:
             compose["services"][service] = dict(
                 {"image": f"ghcr.io/datadog/storedog/{service}:latest"},
