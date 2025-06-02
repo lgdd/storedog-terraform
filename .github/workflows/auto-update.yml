@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docker-compose.images.yml
+          git add ec2-docker-compose/docker-compose.images.yml
           git commit -am "chore: auto update docker-compose.images.yml" || echo "We're good for now. See you next time!"
           git pull --rebase
           git push
