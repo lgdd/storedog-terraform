@@ -81,7 +81,7 @@ services:
     volumes:
     - .env:/app/.env
   worker:
-    image: ghcr.io/datadog/storedog/worker:latest
+    image: ghcr.io/datadog/storedog/backend:latest
     command: wait-for-it postgres:5432 -- bundle exec sidekiq -C config/sidekiq.yml
     depends_on:
     - postgres
