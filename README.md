@@ -40,3 +40,8 @@ After running `terraform apply`, the outputs should give you the public IP/DNS o
 It can take a few minutes to start, so if you want to check the progress and see if there's any error with the cloud init script (i.e. [user_data.sh](./ec2-docker-compose/user_data.sh)), you can run the command `tail -f /var/log/cloud-init-output.log`.
 
 If the cloud init script ran successfully, you can go to `~/storedog` and run `sudo docker compose logs -f` to check the logs of the Storedog services (or a specific service like the Datadog agent with `sudo docker compose logs -f dd-agent`).
+
+### Datadog [Tags](https://docs.datadoghq.com/getting_started/tagging/)
+
+- `env`: value is always `storedog`.
+- `host`: value is given by the Terraform output `instance_name` and prefixed with `storedog-`.
