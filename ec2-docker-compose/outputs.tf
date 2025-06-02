@@ -1,4 +1,4 @@
-output "instance" {
+output "instance_name" {
   value = "${var.ec2_instance_name}-${random_string.storedog_id.result}"
 }
 
