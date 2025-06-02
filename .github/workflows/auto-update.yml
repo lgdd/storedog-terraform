@@ -21,8 +21,10 @@ jobs:
       - name: Run auto-update script
         working-directory: .github/workflows/scripts/auto-update
         run: uv run main.py
+      - name: Move Docker Compose file
+        run: |
+          mv .github/workflows/scripts/auto-update/docker-compose.images.yml .
       - name: Commit & Push
-        working-directory: .github/workflows/scripts/auto-update
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
