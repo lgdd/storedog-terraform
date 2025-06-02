@@ -1,0 +1,32 @@
+name: Auto Update Docker Compose File
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  auto-update:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup UV
+        uses: astral-sh/setup-uv@v6
+      - name: Run auto-update script
+        working-directory: .github/workflows/scripts/auto-update
+        run: uv run main.py
+      - name: Commit & Push
+        working-directory: .github/workflows/scripts/auto-update
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docker-compose.images.yml
+          git commit -am "chore: auto update docker-compose.images.yml" || echo "We're good for now. See you next time!"
+          git pull --rebase
+          git push
