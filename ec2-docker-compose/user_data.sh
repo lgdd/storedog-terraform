@@ -36,4 +36,6 @@ sed -i 's/^NEXT_PUBLIC_DD_CLIENT_TOKEN=.*/NEXT_PUBLIC_DD_CLIENT_TOKEN=${dd_store
 sed -i 's/^NEXT_PUBLIC_DD_SERVICE_FRONTEND=store-frontend/NEXT_PUBLIC_DD_SERVICE_FRONTEND=storedog-frontend/' .env
 sed -i 's/^NEXT_PUBLIC_DD_ENV=storedog-local/NEXT_PUBLIC_DD_ENV=storedog/' .env
 
-sudo docker compose up -d
+curl -s https://raw.githubusercontent.com/lgdd/storedog-terraform/refs/heads/main/docker-compose.images.yml -o docker-compose.images.yml
+
+sudo docker compose -f docker-compose.images.yml up -d
