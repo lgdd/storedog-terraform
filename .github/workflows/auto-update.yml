@@ -18,6 +18,22 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.21"
+      - name: Add GOBIN to PATH
+        run: |
+          gobin=$(go env GOBIN)
+          if [ -z "$gobin" ]; then
+            gobin=$(go env GOPATH)/bin
+          fi
+          echo "GOBIN=$gobin" >> $GITHUB_ENV
+          echo "$gobin" >> $GITHUB_PATH
+        shell: bash
+      - name: Install yamlfmt
+        run: |
+          go install github.com/google/yamlfmt/cmd/yamlfmt@latest
+          # Verify installation
+          command -v yamlfmt || { echo "yamlfmt command still not found after install"; exit 1; }
+          yamlfmt --version
+        shell: bash
       - name: Setup UV
         uses: astral-sh/setup-uv@v6
       - name: Run auto-update script
@@ -28,8 +44,8 @@ jobs:
           mv .github/workflows/scripts/auto-update/docker-compose.images.yml ec2-docker-compose/
       - name: Format Docker Compose file
         run: |
-          go install github.com/google/yamlfmt/cmd/yamlfmt@latest
-          yamllfmt ec2-docker-compose/docker-compose.images.yml
+          yamlfmt ec2-docker-compose/docker-compose.images.yml
+        shell: bash
       - name: Commit & Push
         run: |
           git config --global user.name 'github-actions[bot]'
