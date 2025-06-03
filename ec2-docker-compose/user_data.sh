@@ -19,7 +19,6 @@ sudo chmod +x /usr/local/bin/docker-compose
 # Clone Storedog
 APP_DIR=/home/ubuntu/storedog
 git clone https://github.com/DataDog/storedog.git --depth=1 $${APP_DIR}
-sudo chown -R ubuntu:ubuntu $${APP_DIR}
 
 cd $${APP_DIR}
 cp .env.template .env
@@ -37,5 +36,7 @@ sed -i 's/^NEXT_PUBLIC_DD_SERVICE_FRONTEND=store-frontend/NEXT_PUBLIC_DD_SERVICE
 sed -i 's/^NEXT_PUBLIC_DD_ENV=storedog-local/NEXT_PUBLIC_DD_ENV=storedog/' .env
 
 curl -s https://raw.githubusercontent.com/lgdd/storedog-terraform/refs/heads/main/ec2-docker-compose/docker-compose.images.yml -o docker-compose.images.yml
+
+sudo chown -R ubuntu:ubuntu $${APP_DIR}
 
 sudo docker compose -f docker-compose.images.yml up -d
