@@ -49,12 +49,14 @@ variable "my_public_ip_cidr" {
 
 // Can be populated by environment variable TF_VAR_dd_api_key
 variable "dd_api_key" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 // Can be populated by environment variable TF_VAR_dd_app_key
 variable "dd_app_key" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 // Can be overwritten by TF_VAR_dd_site
