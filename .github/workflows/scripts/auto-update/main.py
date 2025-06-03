@@ -11,7 +11,6 @@ def update_volumes_attribute(compose, services):
         if compose["services"][service].get("volumes") is not None:
             del compose["services"][service]["volumes"]
     compose["services"]["backend"]["volumes"] = [".env:/app/.env"]
-    compose["services"]["worker"]["volumes"] = [".env:/app/.env", "./services/worker/config/initializers/datadog-tracer.rb:/app/config/initializers/datadog-tracer.rb"]
 
 def update_networks(compose):
     for network in compose["networks"]:
@@ -22,15 +21,14 @@ def update_volumes(compose):
         compose["volumes"][volume] = {"name": f"storedog_{volume}"}
 
 def add_image_attribute(compose, services):
+    compose["services"]["worker"] = dict(
+        {"image": f"ghcr.io/datadog/storedog/backend:latest"},
+        **compose["services"]["worker"]
+    )
     for service in services:
         if service == "ads":
             compose["services"][service] = dict(
                 {"image": f"ghcr.io/datadog/storedog/{service}-java:latest"},
-                **compose["services"][service]
-            )
-        elif service == "worker":
-            compose["services"][service] = dict(
-                {"image": f"ghcr.io/datadog/storedog/backend:latest"},
                 **compose["services"][service]
             )
         else:
@@ -40,7 +38,7 @@ def add_image_attribute(compose, services):
             )
 
 if __name__ == "__main__":
-    services = ["frontend", "backend", "worker", "discounts", "ads", "nginx", "postgres"]
+    services = ["frontend", "backend", "discounts", "ads", "nginx", "postgres"]
     origin = "https://raw.githubusercontent.com/DataDog/storedog/refs/heads/main/docker-compose.yml"
     response = requests.get(origin)
     compose = yaml.safe_load(response.text)
