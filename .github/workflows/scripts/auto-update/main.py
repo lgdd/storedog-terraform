@@ -11,6 +11,7 @@ def update_volumes_attribute(compose, services):
         if compose["services"][service].get("volumes") is not None:
             del compose["services"][service]["volumes"]
     compose["services"]["backend"]["volumes"] = [".env:/app/.env"]
+    compose["services"]["frontend"]["volumes"] = [".env:/app/.env"]
 
 def update_networks(compose):
     for network in compose["networks"]:
