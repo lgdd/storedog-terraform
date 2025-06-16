@@ -43,6 +43,8 @@ services:
       com.datadoghq.tags.env: ${DD_ENV-dev}
       com.datadoghq.tags.service: store-frontend
       com.datadoghq.tags.version: ${NEXT_PUBLIC_DD_VERSION_FRONTEND-1.0.0}
+    volumes:
+      - .env:/app/.env
   backend:
     image: ghcr.io/datadog/storedog/backend:latest
     command: wait-for-it postgres:5432 -- bundle exec rails s -b 0.0.0.0 -p 4000 --pid /app/tmp/pids/server.pid
