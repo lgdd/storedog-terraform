@@ -32,6 +32,11 @@ def add_image_attribute(compose, services):
                 {"image": f"ghcr.io/datadog/storedog/{service}-java:latest"},
                 **compose["services"][service]
             )
+        if service == "service-proxy":
+            compose["services"][service] = dict(
+                {"image": f"ghcr.io/datadog/storedog/nginx:latest"},
+                **compose["services"][service]
+            )
         else:
             compose["services"][service] = dict(
                 {"image": f"ghcr.io/datadog/storedog/{service}:latest"},
@@ -39,7 +44,7 @@ def add_image_attribute(compose, services):
             )
 
 if __name__ == "__main__":
-    services = ["frontend", "backend", "discounts", "ads", "nginx", "postgres"]
+    services = ["frontend", "backend", "discounts", "ads", "service-proxy", "postgres"]
     origin = "https://raw.githubusercontent.com/DataDog/storedog/refs/heads/main/docker-compose.yml"
     response = requests.get(origin)
     compose = yaml.safe_load(response.text)
